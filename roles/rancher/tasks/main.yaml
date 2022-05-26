@@ -1,0 +1,58 @@
+- name: add cert-manager helm repo
+  command:
+    cmd: "helm repo add jetstack https://charts.jetstack.io"
+  changed_when: true
+
+- name: add rancher helm repo
+  command:
+    cmd: "helm repo add rancher-stable https://releases.rancher.com/server-charts/stable"
+  changed_when: true
+
+- name: update helm repo
+  command:
+    cmd: "helm repo update"
+  changed_when: true
+
+- name: wait for k3s API server VIP {{ apiserver_endpoint }} to be available
+  wait_for:
+    host: "{{ apiserver_endpoint }}"
+    port: 6443
+    delay: 10
+
+#todo: replace version with ansible variable
+- name: apply cert-manager CRDs
+  command:
+    cmd: kubectl apply -f https://github.com/jetstack/cert-manager/releases/download/{{ cert_manager_ver }}/cert-manager.crds.yaml
+  environment:
+    KUBECONFIG: "/etc/rancher/k3s/k3s.yaml"
+  changed_when: true
+
+- name: deploy cert-manager using helm
+  command:
+    cmd: "helm install \
+      cert-manager jetstack/cert-manager \
+      --namespace cert-manager \
+      --create-namespace \
+      --version {{ cert_manager_ver }}"
+  environment:
+    KUBECONFIG: "/etc/rancher/k3s/k3s.yaml"
+  changed_when: true
+
+- name: wait 15s for cert-manager to fully deploy
+  wait_for:
+    timeout: 15
+
+- name: create the cattle-system namespace for rancher
+  command:
+    cmd: kubectl create namespace cattle-system
+  environment:
+    KUBECONFIG: "/etc/rancher/k3s/k3s.yaml"
+  changed_when: true
+
+#deploy rancher
+- name: deploy rancher with dns name {{ rancher_dns_name }}
+  command:
+    cmd: helm install rancher rancher-stable/rancher --namespace cattle-system --set hostname="{{ rancher_dns_name }}"
+  environment:
+    KUBECONFIG: "/etc/rancher/k3s/k3s.yaml"
+  changed_when: true

@@ -1,0 +1,87 @@
+---
+#do some stuff here to pull the kube config, install helm, pull the traefik chart and deploy traefik
+
+- name: Create traefik config directory on first master
+  file:
+    path: /tmp/traefik
+    state: directory
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+
+- name: Copy traefik chart values to first master
+  template:
+    src: "traefik-chart-values.yaml.j2"
+    dest: /tmp/traefik/traefik-chart-values.yaml
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+    mode: 0644
+
+- name: Copy traefik config to first master
+  template:
+    src: "traefik-config.yaml.j2"
+    dest: /tmp/traefik/traefik-config.yaml
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+    mode: 0644
+
+- name: Copy traefik dashboard manifest to first master
+  template:
+    src: "dashboard.yaml.j2"
+    dest: /tmp/traefik/dashboard.yaml
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+    mode: 0644
+
+#install helm
+
+- name: Download helm install script
+  get_url:
+    url: https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
+    dest: /tmp/traefik/get-helm-3.sh
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+    mode: 0755
+
+- name: Install helm on first master
+  command: >-
+    bash /tmp/traefik/get-helm-3.sh
+  changed_when: true
+
+- name: add traefik helm repo
+  command:
+    cmd: "helm repo add traefik https://helm.traefik.io/traefik"
+  changed_when: true
+
+- name: update helm repo
+  command:
+    cmd: "helm repo update"
+  changed_when: true
+
+- name: wait for k3s API server VIP {{ apiserver_endpoint }} to be available
+  wait_for:
+    host: "{{ apiserver_endpoint }}"
+    port: 6443
+    delay: 10
+
+- name: deploy traefik using helm
+  command:
+    cmd: "helm install traefik traefik/traefik \
+      --namespace=kube-system \
+      --values=/tmp/traefik/traefik-chart-values.yaml"
+  environment:
+    KUBECONFIG: "/etc/rancher/k3s/k3s.yaml"
+  changed_when: true
+
+- name: apply traefik config
+  command:
+    cmd: kubectl apply -f /tmp/traefik/traefik-config.yaml
+  environment:
+    KUBECONFIG: "/etc/rancher/k3s/k3s.yaml"
+  changed_when: true
+
+- name: apply traefik dashboard
+  command:
+    cmd: kubectl apply -f /tmp/traefik/dashboard.yaml
+  environment:
+    KUBECONFIG: "/etc/rancher/k3s/k3s.yaml"
+  changed_when: true

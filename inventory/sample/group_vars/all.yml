@@ -1,0 +1,43 @@
+---
+k3s_version: v1.22.7+k3s1
+ansible_user: serveradmin
+systemd_dir: /etc/systemd/system
+
+# interface which will be used for flannel
+flannel_iface: "eth0"
+
+# apiserver_endpoint is virtual ip-address which will be configured on each master
+apiserver_endpoint: "192.168.10.15"
+
+# k3s_token is required  masters can talk together securely
+k3s_token: "SOME-SUPER-SECRET-TOKEN"
+
+# change these to your liking, the only required one is--no-deploy servicelb
+extra_server_args: "--no-deploy servicelb --no-deploy traefik --write-kubeconfig-mode 644 --kube-apiserver-arg default-not-ready-toleration-seconds=10 --kube-apiserver-arg default-unreachable-toleration-seconds=20 --kube-controller-arg node-monitor-period=15s --kube-controller-arg node-monitor-grace-period=15s --kubelet-arg node-status-update-frequency=10s"
+extra_agent_args: "--kubelet-arg node-status-update-frequency=5s"
+
+# image tag for kube-vip
+kube_vip_tag_version: "v0.4.3"
+
+# image tag for metal lb
+metal_lb_speaker_tag_version: "v0.12.1"
+metal_lb_controller_tag_version: "v0.12.1"
+
+# metallb ip range for load balancer
+metal_lb_ip_range: "192.168.10.40-192.168.10.50"
+
+#first IP from above metalLB range which will be used by traefik
+traefik_endpoint_ip: "192.168.10.40"
+traefik_dash_dns_name: "traefik.yourdomain.lan"
+
+#rancher dns name
+rancher_dns_name: "rancher.yourdomain.lan"
+
+#version of cert-manager to deploy
+cert_manager_ver: "v1.7.1"
+
+# If Vagrant is used
+# ansible_user: vagrant
+# flannel_iface: "eth1"
+# extra_server_args: "--node-ip={{ ansible_eth1.ipv4.address }} --flannel-iface={{ flannel_iface }} --no-deploy servicelb --no-deploy traefik"
+# extra_agent_args: "--flannel-iface={{ flannel_iface }}"
