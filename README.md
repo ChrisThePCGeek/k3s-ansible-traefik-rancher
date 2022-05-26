@@ -4,9 +4,9 @@ Based on <https://github.com/k3s-io/k3s-ansible>
 
 BIG SHOUTOUT TO [TechnoTim](https://github.com/techno-tim) who made this possible and inspired me be sure to check him out!
 
-Kube-vip Control Plane is described -> <https://kube-vip.io/control-plane/>
+here is his video on it: <https://www.youtube.com/watch?v=CbkEWcUZ7zM>
 
-Video here <https://www.youtube.com/watch?v=CbkEWcUZ7zM>
+Kube-vip Control Plane is described -> <https://kube-vip.io/control-plane/>
 
 More docs here <https://docs.technotim.live/posts/k3s-etcd-ansible/>
 
