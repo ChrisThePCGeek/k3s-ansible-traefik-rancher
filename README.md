@@ -65,7 +65,7 @@ Start provisioning of the cluster using the following command:
 ansible-playbook site.yml -i inventory/my-cluster/hosts.ini --ask-pass --ask-become-pass
 ```
 
-After deployment control plane will be accessible via virtual ip-address which is defined in inventory/group_vars/all.yml as apiserver_endpoint
+After deployment control plane will be accessible via virtual ip-address which is defined in inventory/my_cluster/group_vars/all.yml as apiserver_endpoint
 
 Traefik dashboard will be available on the DNS name you specified in the all.yml variables
 
