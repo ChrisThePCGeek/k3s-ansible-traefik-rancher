@@ -16,7 +16,7 @@ apiserver_endpoint: "192.168.10.15"
 k3s_token: "SOME-SUPER-SECRET-TOKEN"
 
 # change these to your liking, the only required one is--no-deploy servicelb
-extra_server_args: "--no-deploy servicelb --no-deploy traefik"
+extra_server_args: "--no-deploy servicelb --no-deploy traefik --write-kubeconfig-mode 644"
 extra_agent_args: ""
 
 # image tag for kube-vip
