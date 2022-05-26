@@ -2,7 +2,7 @@
 
 Based on <https://github.com/k3s-io/k3s-ansible>
 
-BIG SHOUTOUT TO [TechnoTim](https://github.com/techno-tim) who made this possible and inspired me be sure to check him out!
+BIG SHOUTOUT TO [TechnoTim](https://github.com/timothystewart6) who made this possible and inspired me be sure to check him out!
 
 here is his video on it: <https://www.youtube.com/watch?v=CbkEWcUZ7zM>
 
