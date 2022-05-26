@@ -1,7 +1,10 @@
 ---
-k3s_version: v1.22.7+k3s1
+k3s_version: v1.23.4+k3s1
 ansible_user: serveradmin
 systemd_dir: /etc/systemd/system
+
+# set your timezone
+system_timezone: "Your/Timezone"
 
 # interface which will be used for flannel
 flannel_iface: "eth0"
@@ -13,11 +16,11 @@ apiserver_endpoint: "192.168.10.15"
 k3s_token: "SOME-SUPER-SECRET-TOKEN"
 
 # change these to your liking, the only required one is--no-deploy servicelb
-extra_server_args: "--no-deploy servicelb --no-deploy traefik --write-kubeconfig-mode 644 --kube-apiserver-arg default-not-ready-toleration-seconds=10 --kube-apiserver-arg default-unreachable-toleration-seconds=20 --kube-controller-arg node-monitor-period=15s --kube-controller-arg node-monitor-grace-period=15s --kubelet-arg node-status-update-frequency=10s"
-extra_agent_args: "--kubelet-arg node-status-update-frequency=5s"
+extra_server_args: "--no-deploy servicelb --no-deploy traefik"
+extra_agent_args: ""
 
 # image tag for kube-vip
-kube_vip_tag_version: "v0.4.3"
+kube_vip_tag_version: "v0.4.4"
 
 # image tag for metal lb
 metal_lb_speaker_tag_version: "v0.12.1"
