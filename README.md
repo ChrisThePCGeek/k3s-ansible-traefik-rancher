@@ -1,6 +1,6 @@
 # Build a Kubernetes HA-cluster using k3s & kube-vip & metal-lb via Ansible
 
-Based on <https://github.com/k3s-io/k3s-ansible>
+Based on <https://docs.technotim.live/posts/k3s-etcd-ansible/> and <https://github.com/k3s-io/k3s-ansible>
 
 BIG SHOUTOUT TO [TechnoTim](https://github.com/timothystewart6) who made this possible and inspired me be sure to check him out!
 
