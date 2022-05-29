@@ -23,8 +23,6 @@
 - name: apply cert-manager CRDs
   command:
     cmd: kubectl apply -f https://github.com/jetstack/cert-manager/releases/download/{{ cert_manager_ver }}/cert-manager.crds.yaml
-  environment:
-    KUBECONFIG: "/etc/rancher/k3s/k3s.yaml"
   changed_when: true
 
 - name: deploy cert-manager using helm
@@ -34,8 +32,6 @@
       --namespace cert-manager \
       --create-namespace \
       --version {{ cert_manager_ver }}"
-  environment:
-    KUBECONFIG: "/etc/rancher/k3s/k3s.yaml"
   changed_when: true
 
 - name: wait 15s for cert-manager to fully deploy
@@ -45,14 +41,10 @@
 - name: create the cattle-system namespace for rancher
   command:
     cmd: kubectl create namespace cattle-system
-  environment:
-    KUBECONFIG: "/etc/rancher/k3s/k3s.yaml"
   changed_when: true
 
 #deploy rancher
 - name: deploy rancher with dns name {{ rancher_dns_name }}
   command:
     cmd: helm install rancher rancher-stable/rancher --namespace cattle-system --set hostname="{{ rancher_dns_name }}"
-  environment:
-    KUBECONFIG: "/etc/rancher/k3s/k3s.yaml"
   changed_when: true
