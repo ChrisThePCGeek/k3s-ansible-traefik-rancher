@@ -43,6 +43,7 @@
     mode: 0755
 
 - name: Install helm on first master
+  become: yes
   command: >-
     bash /tmp/traefik/get-helm-3.sh
   changed_when: true
@@ -68,20 +69,14 @@
     cmd: "helm install traefik traefik/traefik \
       --namespace=kube-system \
       --values=/tmp/traefik/traefik-chart-values.yaml"
-  environment:
-    KUBECONFIG: "/etc/rancher/k3s/k3s.yaml"
   changed_when: true
 
 - name: apply traefik config
   command:
     cmd: kubectl apply -f /tmp/traefik/traefik-config.yaml
-  environment:
-    KUBECONFIG: "/etc/rancher/k3s/k3s.yaml"
   changed_when: true
 
 - name: apply traefik dashboard
   command:
     cmd: kubectl apply -f /tmp/traefik/dashboard.yaml
-  environment:
-    KUBECONFIG: "/etc/rancher/k3s/k3s.yaml"
   changed_when: true
