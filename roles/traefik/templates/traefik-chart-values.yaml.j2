@@ -55,6 +55,11 @@ dashboard:
 rbac:
   enabled: true
 
+volumes:
+  - mountPath: /data
+    name: traefik-config
+    type: configMap
+
 service:
   enabled: true
   type: LoadBalancer
