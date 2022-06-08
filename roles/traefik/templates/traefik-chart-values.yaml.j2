@@ -1,4 +1,5 @@
 additionalArguments:
+  - --providers.file.filename=/data/conf/traefik-config.yaml
   - --serversTransport.insecureSkipVerify=true
 deployment:
   enabled: true
@@ -54,6 +55,11 @@ dashboard:
 
 rbac:
   enabled: true
+
+volumes:
+  - mountPath: /data/conf
+    name: traefik-config
+    type: configMap
 
 service:
   enabled: true
