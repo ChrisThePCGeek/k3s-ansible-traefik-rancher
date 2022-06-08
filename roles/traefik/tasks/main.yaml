@@ -80,3 +80,8 @@
   command:
     cmd: kubectl apply -f /tmp/traefik/dashboard.yaml
   changed_when: true
+
+- name: Clean up traefik tmp dir
+  file:
+    path: /tmp/traefik/
+    state: absent
