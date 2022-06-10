@@ -3,7 +3,7 @@ additionalArguments:
   - --serversTransport.insecureSkipVerify=true
 deployment:
   enabled: true
-  replicas: 1
+  replicas: {{ traefik_replicas }}
   annotations: {}
   podAnnotations: {}
   additionalContainers: []

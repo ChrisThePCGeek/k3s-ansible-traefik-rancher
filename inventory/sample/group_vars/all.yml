@@ -33,6 +33,9 @@ metal_lb_ip_range: "192.168.10.40-192.168.10.50"
 traefik_endpoint_ip: "192.168.10.40"
 traefik_dash_dns_name: "traefik.yourdomain.lan"
 
+#number of traefik pods you want running
+traefik_replicas: 1
+
 #rancher dns name
 rancher_dns_name: "rancher.yourdomain.lan"
 
