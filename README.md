@@ -8,7 +8,7 @@ here is his video on it: <https://www.youtube.com/watch?v=CbkEWcUZ7zM>
 
 Kube-vip Control Plane is described -> <https://kube-vip.io/control-plane/>
 
-More docs here <https://docs.technotim.live/posts/k3s-etcd-ansible/>
+Instructions/notes specific to my version are here: <https://thepcgeek.net/posts/ansible-to-k3s-rancher/>
 
 ## K3s Ansible Playbook
 
