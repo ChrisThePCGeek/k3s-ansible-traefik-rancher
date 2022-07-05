@@ -7,6 +7,7 @@ systemd_dir: /etc/systemd/system
 system_timezone: "Your/Timezone"
 
 # interface which will be used for flannel
+# debian is usually eth0, ubuntu could be either that or ens18, varies by OS. check with `ip -a` in terminal
 flannel_iface: "eth0"
 
 # apiserver_endpoint is virtual ip-address which will be configured on each master
