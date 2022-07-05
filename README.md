@@ -1,18 +1,16 @@
 # Build a Kubernetes HA-cluster using k3s & kube-vip & metal-lb via Ansible
 
-Based on <https://docs.technotim.live/posts/k3s-etcd-ansible/> and <https://github.com/k3s-io/k3s-ansible>
+*Based on <https://docs.technotim.live/posts/k3s-etcd-ansible/> and <https://github.com/k3s-io/k3s-ansible*
 
 BIG SHOUTOUT TO [TechnoTim](https://github.com/timothystewart6) who made this possible and inspired me be sure to check him out!
 
-here is his video on it: <https://www.youtube.com/watch?v=CbkEWcUZ7zM>
+## Instructions/notes
 
-Kube-vip Control Plane is described -> <https://kube-vip.io/control-plane/>
-
-Instructions/notes specific to my version are here: <https://thepcgeek.net/posts/ansible-to-k3s-rancher/>
+Here: <https://thepcgeek.net/posts/ansible-to-k3s-rancher/>
 
 ## K3s Ansible Playbook
 
-Build a Kubernetes cluster using Ansible with k3s. The goal is easily install a highly available Kubernetes cluster with Traefik and Rancher on machines running:
+Build a k3s Kubernetes cluster using Ansible. The goal is easily install a highly available Kubernetes cluster with Traefik and Rancher on machines running:
 
 - [X] Debian
 - [X] Ubuntu
@@ -93,3 +91,9 @@ See <https://kube-vip.io/control-plane/>
 ## MetalLB
 
 see <https://metallb.universe.tf/installation/>
+
+## Links
+
+Techno-Tim's video on his playbook this is based on: <https://www.youtube.com/watch?v=CbkEWcUZ7zM>
+
+Kube-vip Control Plane is described -> <https://kube-vip.io/control-plane/>

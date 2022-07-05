@@ -30,7 +30,10 @@ metal_lb_controller_tag_version: "v0.12.1"
 metal_lb_ip_range: "192.168.10.40-192.168.10.50"
 
 #first IP from above metalLB range which will be used by traefik
+#--IMPORTANT-- This IP NEEDS to be contained in the above pool provided to metalLB.  Usually I use the first one in that range
 traefik_endpoint_ip: "192.168.10.40"
+
+#set this in your local DNS server (ie. Pihole, or pfsense, etc.) pointing to the IP from the line just above.
 traefik_dash_dns_name: "traefik.yourdomain.lan"
 
 #number of traefik pods you want running
