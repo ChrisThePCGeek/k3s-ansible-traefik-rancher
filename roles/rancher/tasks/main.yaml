@@ -46,5 +46,5 @@
 #deploy rancher
 - name: deploy rancher with dns name {{ rancher_dns_name }}
   command:
-    cmd: helm install rancher rancher-stable/rancher --namespace cattle-system --set hostname="{{ rancher_dns_name }}"
+    cmd: helm install rancher rancher-stable/rancher --namespace cattle-system --set hostname="{{ rancher_dns_name }}" --set replicas="{{ rancher_replicas }}"
   changed_when: true

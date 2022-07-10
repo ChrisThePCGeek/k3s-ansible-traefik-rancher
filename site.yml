@@ -25,3 +25,5 @@
 - hosts: master[0]
   roles:
     - role: rancher
+  vars:
+    rancher_replicas: "{{ groups['master'] | length }}"
