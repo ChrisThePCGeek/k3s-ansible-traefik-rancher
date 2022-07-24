@@ -16,8 +16,11 @@ apiserver_endpoint: "192.168.10.15"
 # k3s_token is required  masters can talk together securely
 k3s_token: "SOME-SUPER-SECRET-TOKEN"
 
-# change these to your liking, the only required one is--no-deploy servicelb
-extra_server_args: "--no-deploy servicelb --no-deploy traefik --write-kubeconfig-mode 644"
+# change these to your liking, the only required ones are --no-deploy servicelb and --no-depoly traefik (this playbook deploys traefik)
+# -----------------------
+# 7-24-2022: added additional args for prometheus monitoring following Tim's tutorial on that, If you don't plan to do monitoring they can be removed
+# "--kube-controller-manager-arg bind-address=0.0.0.0 --kube-proxy-arg metrics-bind-address=0.0.0.0 --kube-scheduler-arg bind-address=0.0.0.0 --etcd-expose-metrics true --kubelet-arg containerd=/run/k3s/containerd/containerd.sock"
+extra_server_args: "--no-deploy servicelb --no-deploy traefik --write-kubeconfig-mode 644 --kube-controller-manager-arg bind-address=0.0.0.0 --kube-proxy-arg metrics-bind-address=0.0.0.0 --kube-scheduler-arg bind-address=0.0.0.0 --etcd-expose-metrics true --kubelet-arg containerd=/run/k3s/containerd/containerd.sock"
 extra_agent_args: ""
 
 # image tag for kube-vip
