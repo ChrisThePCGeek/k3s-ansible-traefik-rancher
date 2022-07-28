@@ -43,6 +43,9 @@ traefik_dash_dns_name: "traefik.yourdomain.lan"
 #number of traefik pods you want running
 traefik_replicas: 1
 
+#number of replicas you want for rancher's pods
+rancher_replicas: 3
+
 #rancher dns name
 rancher_dns_name: "rancher.yourdomain.lan"
 

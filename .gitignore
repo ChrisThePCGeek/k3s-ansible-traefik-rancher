@@ -1,1 +1,3 @@
 inventory/my-cluster/
+dev-deploy.sh
+dev-kill-all.sh
