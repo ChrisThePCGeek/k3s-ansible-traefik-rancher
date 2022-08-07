@@ -1,8 +1,4 @@
-inventory/my-cluster/
-dev-deploy.sh
-dev-kill-all.sh
 roles/my-cluster/
-my-cluster.yml
-priv-deploy.sh
+run-scripts/
 add-hosts.yml
-priv-deploy-add.sh
+my-cluster.yml

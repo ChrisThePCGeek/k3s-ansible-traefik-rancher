@@ -1,6 +1,9 @@
 additionalArguments:
   - --providers.file.filename=/data/conf/traefik-config.yaml
   - --serversTransport.insecureSkipVerify=true
+globalArguments:
+  - "--global.sendanonymoususage=false"
+
 deployment:
   enabled: true
   replicas: {{ traefik_replicas }}
