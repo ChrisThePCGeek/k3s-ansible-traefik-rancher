@@ -33,6 +33,9 @@ metal_lb_controller_tag_version: "v0.12.1"
 # metallb ip range for load balancer
 metal_lb_ip_range: "192.168.10.40-192.168.10.50"
 
+#deploy traefik?
+deploy_traefik: true
+
 #first IP from above metalLB range which will be used by traefik
 #--IMPORTANT-- This IP NEEDS to be contained in the above pool provided to metalLB.  Usually I use the first one in that range
 traefik_endpoint_ip: "192.168.10.40"
@@ -43,6 +46,8 @@ traefik_dash_dns_name: "traefik.yourdomain.lan"
 #number of traefik pods you want running
 traefik_replicas: 1
 
+#deploy rancher?
+deploy_rancher: true
 #number of replicas you want for rancher's pods
 rancher_replicas: 3
 
