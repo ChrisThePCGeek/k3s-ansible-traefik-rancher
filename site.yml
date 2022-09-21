@@ -21,9 +21,9 @@
 - hosts: master[0]
   roles:
     - role: traefik
-      when: deploy_traefik = true | default(false)
+      when: deploy_traefik
 
 - hosts: master[0]
   roles:
     - role: rancher
-      when: deploy_rancher = true | default(false)
+      when: deploy_rancher
