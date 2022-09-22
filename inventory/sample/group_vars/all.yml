@@ -17,6 +17,8 @@ apiserver_endpoint: "192.168.10.15"
 k3s_token: "SOME-SUPER-SECRET-TOKEN"
 
 # change these to your liking, the only required ones are --no-deploy servicelb and --no-depoly traefik (this playbook deploys traefik)
+# If you don't want to deploy traefik with helm afterwards and rather use the one packed with k3s, remove the --no-deploy traefik flag
+# and set the var 'deploy_traefik: false' down below
 # -----------------------
 # 7-24-2022: added additional args for prometheus monitoring following Tim's tutorial on that, If you don't plan to do monitoring they can be removed
 # "--kube-controller-manager-arg bind-address=0.0.0.0 --kube-proxy-arg metrics-bind-address=0.0.0.0 --kube-scheduler-arg bind-address=0.0.0.0 --etcd-expose-metrics true --kubelet-arg containerd=/run/k3s/containerd/containerd.sock"

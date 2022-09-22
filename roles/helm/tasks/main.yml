@@ -1,0 +1,15 @@
+#install helm
+
+- name: Download helm install script
+  get_url:
+    url: https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
+    dest: /tmp/get-helm-3.sh
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+    mode: 0755
+
+- name: Install helm on first master
+  become: yes
+  command: >-
+    bash /tmp/get-helm-3.sh
+  changed_when: true

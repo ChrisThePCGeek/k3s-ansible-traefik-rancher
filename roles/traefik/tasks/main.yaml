@@ -32,22 +32,6 @@
     group: "{{ ansible_user }}"
     mode: 0644
 
-#install helm
-
-- name: Download helm install script
-  get_url:
-    url: https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
-    dest: /tmp/traefik/get-helm-3.sh
-    owner: "{{ ansible_user }}"
-    group: "{{ ansible_user }}"
-    mode: 0755
-
-- name: Install helm on first master
-  become: yes
-  command: >-
-    bash /tmp/traefik/get-helm-3.sh
-  changed_when: true
-
 - name: add traefik helm repo
   command:
     cmd: "helm repo add traefik https://helm.traefik.io/traefik"

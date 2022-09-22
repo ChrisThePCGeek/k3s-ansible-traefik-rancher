@@ -19,10 +19,11 @@
     port: 6443
     delay: 10
 
-#todo: replace version with ansible variable
 - name: apply cert-manager CRDs
   command:
     cmd: kubectl apply -f https://github.com/jetstack/cert-manager/releases/download/{{ cert_manager_ver }}/cert-manager.crds.yaml
+  retries: 2
+  delay: 3
   changed_when: true
 
 - name: deploy cert-manager using helm

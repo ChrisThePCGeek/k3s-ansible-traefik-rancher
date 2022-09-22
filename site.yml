@@ -20,10 +20,15 @@
 
 - hosts: master[0]
   roles:
+    - role: helm
+      when: deploy_traefik or deploy_rancher | bool
+
+- hosts: master[0]
+  roles:
     - role: traefik
-      when: deploy_traefik
+      when: deploy_traefik | bool
 
 - hosts: master[0]
   roles:
     - role: rancher
-      when: deploy_rancher
+      when: deploy_rancher | bool
