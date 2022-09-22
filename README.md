@@ -53,9 +53,6 @@ If multiple hosts are in the master group, the playbook will automatically setup
 https://rancher.com/docs/k3s/latest/en/installation/ha-embedded/
 This requires at least k3s version 1.19.1
 
-**A note about node-taints and having masters not run workloads on them.**
-In Tim's version he has encorperated adding the criticaladdonsonly=noexecute taint to his playbook process.  I have decided not to include this in my version because I run only 3 master nodes and they run my stuff on them which is perfectly fine to do. I don't have the need to taint my masters.  If you want to continue using my playbook you can taint your masters after deployment by running a kubectl command or adding the taint to the nodes in rancher.
-
 Edit inventory/my_cluster/group_vars/all.yml to match your environment.
 
 You can also make any edits needed to the traefik config or chart values ie:(adding resolvers for TLS certs), those files are under `roles/traefik/templates` keep the file names the same though or the playbook will fail
@@ -71,6 +68,10 @@ After deployment control plane will be accessible via virtual ip-address which i
 Traefik dashboard will be available on the DNS name you specified in the all.yml variables
 
 Rancher will also be available shortly after the playbook finishes at it's DNS name also specified in the variable file
+
+### A note about node-taints and having masters not run workloads on them
+
+In Tim's version he has encorperated adding the criticaladdonsonly=noexecute taint to his playbook process.  I have decided not to include this in my version because I run only 3 master nodes and they run my stuff on them which is perfectly fine to do. I don't have the need to taint my masters.  If you want to continue using my playbook you can taint your masters after deployment by running a kubectl command or adding the taint to the nodes in rancher.
 
 
 Remove k3s cluster
