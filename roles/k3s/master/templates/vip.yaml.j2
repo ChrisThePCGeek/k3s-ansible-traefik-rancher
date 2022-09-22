@@ -1,7 +1,6 @@
 apiVersion: apps/v1
 kind: DaemonSet
 metadata:
-  creationTimestamp: null
   name: kube-vip-ds
   namespace: kube-system
 spec:
@@ -10,7 +9,6 @@ spec:
       name: kube-vip-ds
   template:
     metadata:
-      creationTimestamp: null
       labels:
         name: kube-vip-ds
     spec:
@@ -35,7 +33,7 @@ spec:
         - name: vip_interface
           value: {{ flannel_iface }}
         - name: vip_cidr
-          value: "32"
+          value: "{{ apiserver_endpoint | ansible.utils.ipsubnet | ansible.utils.ipaddr('prefix') }}"
         - name: cp_enable
           value: "true"
         - name: cp_namespace
@@ -70,6 +68,8 @@ spec:
       - effect: NoSchedule
         operator: Exists
       - effect: NoExecute
+        operator: Exists
+      - key: CriticalAddonsOnly
         operator: Exists
   updateStrategy: {}
 status:
