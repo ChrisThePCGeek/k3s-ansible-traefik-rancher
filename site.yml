@@ -18,6 +18,11 @@
   roles:
     - role: k3s/node
 
+- hosts: master
+  become: yes
+  roles:
+    - role: k3s/post
+
 - hosts: master[0]
   roles:
     - role: helm
