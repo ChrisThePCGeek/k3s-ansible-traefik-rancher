@@ -10,6 +10,10 @@ system_timezone: "Your/Timezone"
 # debian is usually eth0, ubuntu could be either that or ens18, varies by OS. check with `ip -a` in terminal
 flannel_iface: "eth0"
 
+#retry count to check all nodes join cluster.  uncomment and set this to something higher than 20
+#if your cluster doesn't all join up before the playbook times out
+#retry_count: 40
+
 # apiserver_endpoint is virtual ip-address which will be configured on each master
 apiserver_endpoint: "192.168.10.15"
 
