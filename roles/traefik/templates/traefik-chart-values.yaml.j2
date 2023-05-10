@@ -46,9 +46,11 @@ ingressRoute:
 providers:
   kubernetesCRD:
     enabled: true
+    allowExternalNameServices: true
     namespaces: []
   kubernetesIngress:
     enabled: true
+    allowExternalNameServices: true
     namespaces: []
     publishedService:
       enabled: true
