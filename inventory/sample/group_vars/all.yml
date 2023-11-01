@@ -1,5 +1,5 @@
 ---
-k3s_version: v1.24.11+k3s1
+k3s_version: v1.26.10+k3s1
 ansible_user: serveradmin
 systemd_dir: /etc/systemd/system
 
@@ -58,7 +58,7 @@ extra_agent_args: >-
   {{ extra_args }}
 
 # image tag for kube-vip
-kube_vip_tag_version: "v0.5.11"
+kube_vip_tag_version: "v0.5.12"
 
 # metallb type frr or native
 metal_lb_type: "native"
@@ -72,7 +72,7 @@ metal_lb_mode: "layer2"
 # metal_lb_bgp_peer_address: "192.168.30.1"
 
 # image tag for metal lb
-metal_lb_frr_tag_version: "v7.5.1"
+#metal_lb_frr_tag_version: "v7.5.1"
 metal_lb_speaker_tag_version: "v0.13.9"
 metal_lb_controller_tag_version: "v0.13.9"
 
@@ -101,15 +101,18 @@ proxmox_lxc_ct_ids:
   - 204
 
 
-#deploy traefik?
+#deploy traefik? this deploys both an internal (default ingress) and external instance of traefik, external = traefik-external ingressClass
 deploy_traefik: true
 
 #first IP from above metalLB range which will be used by traefik
 #--IMPORTANT-- This IP NEEDS to be contained in the above pool provided to metalLB.  Usually I use the first one in that range
-traefik_endpoint_ip: "192.168.10.40"
+# internal and external param respectively - port forward from your firewall to the external instance
+traefik_int_endpoint_ip: "192.168.10.40"
+traefik_ext_endpoint_ip: "192.168.10.41"
 
 #set this in your local DNS server (ie. Pihole, or pfsense, etc.) pointing to the IP from the line just above.
-traefik_dash_dns_name: "traefik.yourdomain.lan"
+traefik_int_dash_dns_name: "traefik.yourdomain.lan"
+traefik_ext_dash_dns_name: "traefik-ext.yourdomain.lan"
 
 #number of traefik pods you want running
 traefik_replicas: 1
@@ -123,4 +126,54 @@ rancher_replicas: 1
 rancher_dns_name: "rancher.yourdomain.lan"
 
 #version of cert-manager to deploy
-cert_manager_ver: "v1.11.0"
+cert_manager_ver: "v1.13.2"
+
+#set this to true and put your ca cert and internal-ca issuer info in the template files under the cert-manager role
+use_internal_ca: false
+
+
+# Only enable this if you have set up your own container registry to act as a mirror / pull-through cache
+# (harbor / nexus / docker's official registry / etc).
+# Can be beneficial for larger dev/test environments (for example if you're getting rate limited by docker hub),
+# or air-gapped environments where your nodes don't have internet access after the initial setup
+# (which is still needed for downloading the k3s binary and such).
+# k3s's documentation about private registries here: https://docs.k3s.io/installation/private-registry
+custom_registries: false
+# The registries can be authenticated or anonymous, depending on your registry server configuration.
+# If they allow anonymous access, simply remove the following bit from custom_registries_yaml
+#   configs:
+#     "registry.domain.com":
+#       auth:
+#         username: yourusername
+#         password: yourpassword
+# The following is an example that pulls all images used in this playbook through your private registries.
+# It also allows you to pull your own images from your private registry, without having to use imagePullSecrets
+# in your deployments.
+# If all you need is your own images and you don't care about caching the docker/quay/ghcr.io images,
+# you can just remove those from the mirrors: section.
+custom_registries_yaml: |
+  mirrors:
+    docker.io:
+      endpoint:
+        - "https://registry.domain.com/v2/dockerhub"
+    quay.io:
+      endpoint:
+        - "https://registry.domain.com/v2/quayio"
+    ghcr.io:
+      endpoint:
+        - "https://registry.domain.com/v2/ghcrio"
+    registry.domain.com:
+      endpoint:
+        - "https://registry.domain.com"
+
+  configs:
+    "registry.domain.com":
+      auth:
+        username: yourusername
+        password: yourpassword
+
+# Only enable and configure these if you access the internet through a proxy
+# proxy_env:
+#   HTTP_PROXY: "http://proxy.domain.local:3128"
+#   HTTPS_PROXY: "http://proxy.domain.local:3128"
+#   NO_PROXY: "*.domain.local,127.0.0.0/8,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16"

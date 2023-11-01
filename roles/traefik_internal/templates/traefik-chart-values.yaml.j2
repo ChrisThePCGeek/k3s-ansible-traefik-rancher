@@ -1,0 +1,86 @@
+additionalArguments:
+  - "--log.level=INFO"
+  - --serversTransport.insecureSkipVerify=true
+globalArguments:
+  - "--global.sendanonymoususage=false"
+  - "--global.checknewversion=false"
+
+deployment:
+  enabled: true
+  replicas: {{ traefik_replicas }}
+  annotations: {}
+  podAnnotations: {}
+  additionalContainers: []
+  initContainers:
+
+# Configure ports
+ports:
+  traefik:
+    port: 9000
+    exposedPort: 9000
+    protocol: TCP
+  web:
+    port: 8000
+    expose: true
+    exposedPort: 80
+    protocol: TCP
+  websecure:
+    port: 8443
+    expose: true
+    exposedPort: 443
+    protocol: TCP
+    tls:
+      enabled: true
+      options: ""
+      certResolver: ""
+      domains: []
+  metrics:
+    port: 9100
+    expose: false
+    exposedPort: 9100
+    protocol: TCP
+
+ingressRoute:
+  dashboard:
+    enabled: false
+
+ingressClass:
+  enabled: true
+  isDefaultClass: true
+
+providers:
+  kubernetesCRD:
+    enabled: true
+    allowExternalNameServices: true
+    # change this to traefik-external if you want your default traefik to serve external and be in line with TechnoTim's other things
+    # ingressClass: traefik
+  kubernetesIngress:
+    enabled: true
+    allowExternalNameServices: true
+    publishedService:
+      enabled: true
+
+dashboard:
+  enabled: true
+
+rbac:
+  enabled: true
+
+service:
+  enabled: true
+  type: LoadBalancer
+  # Additional annotations (e.g. for cloud provider specific config)
+  annotations: {}
+  # Additional service labels (e.g. for filtering Service by custom labels)
+  labels: {}
+  # Additional entries here will be added to the service spec. Cannot contains
+  # type, selector or ports entries.
+  spec:
+    # externalTrafficPolicy: Cluster
+    loadBalancerIP: {{ traefik_int_endpoint_ip }} # this should be your Metal LB IP
+    # clusterIP: "2.3.4.5"
+  loadBalancerSourceRanges: []
+    # - 192.168.0.1/32
+    # - 172.16.0.0/16
+  externalIPs: []
+    # - 1.2.3.4

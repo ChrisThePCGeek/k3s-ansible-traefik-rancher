@@ -1,0 +1,13 @@
+{% if use_internal_ca == true %}
+volumeMounts:
+  - name: ca-pemstore
+    mountPath: /etc/ssl/certs/internal-ca.pem
+    subPath: internal-ca.pem
+    readOnly: true
+volumes:
+  - name: ca-pemstore
+    configMap:
+      # Provide the name of the ConfigMap containing the files you want
+      # to add to the container
+      name: ca-pemstore
+{% endif %}

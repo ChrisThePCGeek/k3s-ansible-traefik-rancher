@@ -1,0 +1,20 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: ext-dashboard
+  annotations:
+   kubernetes.io/ingress.class: traefik-external
+  namespace: kube-system
+  labels:
+    app.kubernetes.io/name: traefik
+    app.kubernetes.io/instance: traefik-external
+spec:
+  entryPoints:
+    - web
+    - websecure
+  routes:
+    - match: Host(`{{ traefik_ext_dash_dns_name }}`)
+      kind: Rule
+      services:
+        - name: api@internal
+          kind: TraefikService
