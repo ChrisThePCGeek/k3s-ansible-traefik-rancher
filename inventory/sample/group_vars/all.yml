@@ -58,7 +58,7 @@ extra_agent_args: >-
   {{ extra_args }}
 
 # image tag for kube-vip
-kube_vip_tag_version: "v0.5.12"
+kube_vip_tag_version: "v0.6.3"
 
 # metallb type frr or native
 metal_lb_type: "native"
@@ -73,8 +73,8 @@ metal_lb_mode: "layer2"
 
 # image tag for metal lb
 #metal_lb_frr_tag_version: "v7.5.1"
-metal_lb_speaker_tag_version: "v0.13.9"
-metal_lb_controller_tag_version: "v0.13.9"
+metal_lb_speaker_tag_version: "v0.13.12"
+metal_lb_controller_tag_version: "v0.13.12"
 
 # metallb ip range for load balancer
 metal_lb_ip_range: "192.168.10.40-192.168.10.50"
