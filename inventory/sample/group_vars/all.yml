@@ -131,6 +131,14 @@ cert_manager_ver: "v1.13.2"
 #set this to true and put your ca cert and internal-ca issuer info in the template files under the cert-manager role
 use_internal_ca: false
 
+issuer_email: "cert-manager@yourdomain.lan"
+issuer_server_addr: "https://ca.yourdomain.lan/directory"
+
+internal_ca_cert: |
+  -----BEGIN CERTIFICATE-----
+  <cert data here>
+  -----END CERTIFICATE-----
+
 
 # Only enable this if you have set up your own container registry to act as a mirror / pull-through cache
 # (harbor / nexus / docker's official registry / etc).

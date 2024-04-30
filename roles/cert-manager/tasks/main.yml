@@ -5,6 +5,7 @@
     state: directory
     owner: "{{ ansible_user }}"
     group: "{{ ansible_user }}"
+  when: use_internal_ca | bool
 
 - name: Copy values to first master
   template:
@@ -13,6 +14,7 @@
     owner: "{{ ansible_user }}"
     group: "{{ ansible_user }}"
     mode: 0644
+  when: use_internal_ca | bool
 
 - name: Copy internal-ca to first master
   template:
@@ -70,7 +72,7 @@
   changed_when: true
   when: use_internal_ca | bool
 
-- name: deploy cert-manager using helm
+- name: deploy cert-manager using helm with internal CA
   command:
     cmd: "helm install \
       cert-manager jetstack/cert-manager \
@@ -79,6 +81,17 @@
       --values=/tmp/cert-manager/values.yaml
       --wait"
   changed_when: true
+  when: use_internal_ca | bool
+
+- name: deploy cert-manager using helm without internal CA
+  command:
+    cmd: "helm install \
+      cert-manager jetstack/cert-manager \
+      --namespace cert-manager \
+      --version {{ cert_manager_ver }} \
+      --wait"
+  changed_when: true
+  when: not use_internal_ca | bool
 
 - name: create internal CA issuer
   command:

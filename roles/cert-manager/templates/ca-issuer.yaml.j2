@@ -4,8 +4,8 @@ metadata:
   name: lab-ca
 spec:
   acme:
-    email: cert-manager@pcgeek.lan
-    server: https://ca.pcgeek.lan/directory
+    email: {{ issuer_email }}
+    server: {{ issuer_server_addr }}
     privateKeySecretRef:
       # Secret resource that will be used to store the account's private key.
       name: example-issuer-account-key

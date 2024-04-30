@@ -2,3 +2,4 @@ roles/my-cluster/
 add-hosts.yml
 my-cluster.yml
 ansible.cfg
+reset-ssh-known-hosts.sh
