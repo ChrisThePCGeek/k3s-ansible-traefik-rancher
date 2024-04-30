@@ -128,7 +128,7 @@ rancher_dns_name: "rancher.yourdomain.lan"
 #version of cert-manager to deploy
 cert_manager_ver: "v1.13.2"
 
-#set this to true and put your ca cert and internal-ca issuer info in the template files under the cert-manager role
+#set this to true and put your ca cert and internal-ca issuer info in the variables below
 use_internal_ca: false
 
 issuer_email: "cert-manager@yourdomain.lan"
