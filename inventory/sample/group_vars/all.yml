@@ -47,6 +47,7 @@ extra_server_args: >-
   {{ '--node-taint node-role.kubernetes.io/master=true:NoSchedule' if k3s_master_taint else '' }}
   --disable servicelb
   --disable traefik
+  --tls-san {{ apiserver_endpoint }}
   --write-kubeconfig-mode 644
   --kube-controller-manager-arg bind-address=0.0.0.0
   --kube-proxy-arg metrics-bind-address=0.0.0.0
