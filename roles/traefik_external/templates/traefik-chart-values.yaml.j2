@@ -1,10 +1,7 @@
+# helm install traefik-external traefik/traefik --namespace=kube-system --values=traefik-ext-chart-vals.yaml
 additionalArguments:
-  - "--log.level=INFO"
   - --serversTransport.insecureSkipVerify=true
-globalArguments:
-  - "--global.sendanonymoususage=false"
-  - "--global.checknewversion=false"
-
+  - --providers.kubernetesingress.ingressclass=traefik-external
 deployment:
   enabled: true
   replicas: {{ traefik_replicas }}
@@ -20,11 +17,17 @@ ports:
     exposedPort: 9000
     protocol: TCP
   web:
+    port: 8000
+    expose:
+      default: true
+    exposedPort: 80
+    protocol: TCP
     redirectTo:
       port: websecure
   websecure:
     port: 8443
-    expose: true
+    expose:
+      default: true
     exposedPort: 443
     protocol: TCP
     tls:
@@ -34,7 +37,8 @@ ports:
       domains: []
   metrics:
     port: 9100
-    expose: false
+    expose:
+      default: false
     exposedPort: 9100
     protocol: TCP
 
@@ -44,17 +48,18 @@ ingressRoute:
 
 ingressClass:
   enabled: true
+  # keep traefik for external services from becoming the default when no ingressClass is specified
   isDefaultClass: false
 
 providers:
   kubernetesCRD:
     enabled: true
     allowExternalNameServices: true
-    ingressClass: traefik-external
+    namespaces: []
   kubernetesIngress:
     enabled: true
     allowExternalNameServices: true
-    ingressClass: traefik-external
+    namespaces: []
     publishedService:
       enabled: true
 
@@ -75,6 +80,7 @@ service:
   # type, selector or ports entries.
   spec:
     # externalTrafficPolicy: Cluster
+    # CHANGE THIS IP ADDRESS IN LINE BELOW TO THE 2ND METALLB IP - use for port forward of 80/443 from firewall
     loadBalancerIP: {{ traefik_ext_endpoint_ip }} # this should be your Metal LB IP
     # clusterIP: "2.3.4.5"
   loadBalancerSourceRanges: []

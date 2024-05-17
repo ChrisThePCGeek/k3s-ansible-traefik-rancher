@@ -57,7 +57,8 @@
   command:
     cmd: "helm install traefik-external traefik/traefik \
       --namespace=kube-system \
-      --values=/tmp/traefik-ext/traefik-chart-values.yaml"
+      --values=/tmp/traefik-ext/traefik-chart-values.yaml
+      --wait"
   changed_when: true
 
 - name: apply traefik config
